@@ -59,12 +59,26 @@ const saveReferral = (referrerUserId, refereeId) => {
         }
         let referral = new referralSchema(data)
         referral.save()
-        .then((res)=>{
-            resolve({ status: true, msg: "Saved", data: res })
-        })
-        .catch((err)=>{
-            reject({ status: false, errorMsg: "There was an error saving data", error: err })
-        })
+            .then((res) => {
+                resolve({ status: true, msg: "Saved", data: res })
+            })
+            .catch((err) => {
+                reject({ status: false, errorMsg: "There was an error saving data", error: err })
+            })
+    })
+}
+
+const getAllUserReferree = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let allReferree = await referralSchema.find({ 'referrerUserId': userId })
+            if (allReferree) {
+                resolve({ status: true, msg: "fetched", data: allReferree })
+            }
+        }
+        catch(err) {
+            reject({ status: false, errorMsg: "There was an error fetching data", error: err })
+        }
     })
 }
 
@@ -72,5 +86,6 @@ const saveReferral = (referrerUserId, refereeId) => {
 module.exports = {
     saveUserInfo,
     getUser,
-    saveReferral
+    saveReferral,
+    getAllUserReferree
 }
