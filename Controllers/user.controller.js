@@ -37,6 +37,20 @@ const saveUserInfo = async (telegramData) => {
     })
 }
 
+const getUser = (userId) => {
+    return new Promise( async (resolve, reject)=>{
+        try{
+            let user = await userSchema.findOne({ userId })
+            if (user) {
+                resolve({ status: true, data })
+            }
+        }
+        catch(error) {
+            reject({ status: false, errorMsg: "Error fetching data", error})
+        }
+    })
+}
+
 
 module.exports = {
     saveUserInfo

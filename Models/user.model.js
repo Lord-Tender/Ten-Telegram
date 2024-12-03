@@ -11,7 +11,7 @@ userSchema = mongoose.Schema(
     }
 )
 
-referral = mongooose.Schema(
+referral = mongoose.Schema(
     {
         referUserId: { type: String, require: true },
         refeeId: { type: String, require: true }
@@ -21,4 +21,5 @@ referral = mongooose.Schema(
 
 module.exports = {
     userSchema: mongoose.model('user', userSchema),
+    referralSchema: mongoose.model('referral', referral)
 }
