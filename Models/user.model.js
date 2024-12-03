@@ -11,6 +11,12 @@ userSchema = mongoose.Schema(
     }
 )
 
+referral = mongooose.Schema(
+    {
+        referUserId: { type: String, require: true },
+        refeeId: { type: String, require: true }
+    }
+)
 
 
 module.exports = {
