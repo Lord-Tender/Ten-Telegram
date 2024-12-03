@@ -1,4 +1,4 @@
-const { userSchema } = require('../Models/user.model')
+const { userSchema, referralSchema } = require('../Models/user.model')
 
 const generateUserId = async () => {
     let data = await userSchema.find({})
@@ -22,36 +22,55 @@ const saveUserInfo = async (telegramData) => {
         }
         let user = new userSchema(data)
         user.save()
-        .then((response)=>{
-            console.log(response)
-            resolve({ status: true, data: response })
-        })
-        .catch((err)=>{
-            console.error(err)
-            if (err.code === 11000) {
-                reject({ status: false, errorMsg: "Already a user", code: err.code})
-            }
+            .then((response) => {
+                console.log(response)
+                resolve({ status: true, data: response })
+            })
+            .catch((err) => {
+                console.error(err)
+                if (err.code === 11000) {
+                    reject({ status: false, errorMsg: "Already a user", code: err.code })
+                }
 
-            reject({ status: false, errorMsg: "Unknown error"})
-        })
+                reject({ status: false, errorMsg: "Unknown error" })
+            })
     })
 }
 
 const getUser = (userId) => {
-    return new Promise( async (resolve, reject)=>{
-        try{
+    return new Promise(async (resolve, reject) => {
+        try {
             let user = await userSchema.findOne({ userId })
             if (user) {
                 resolve({ status: true, data })
             }
         }
-        catch(error) {
-            reject({ status: false, errorMsg: "Error fetching data", error})
+        catch (error) {
+            reject({ status: false, errorMsg: "Error fetching data", error })
         }
+    })
+}
+
+const saveReferral = (referrerUserId, refereeId) => {
+    return new Promise((resolve, reject) => {
+        let data = {
+            referrerUserId,
+            refereeId
+        }
+        let referral = new referralSchema(data)
+        referral.save()
+        .then((res)=>{
+            resolve({ status: true, msg: "Saved", data: res })
+        })
+        .catch((err)=>{
+            reject({ status: false, errorMsg: "There was an error saving data", error: err })
+        })
     })
 }
 
 
 module.exports = {
-    saveUserInfo
+    saveUserInfo,
+    getUser,
+    saveReferral
 }
