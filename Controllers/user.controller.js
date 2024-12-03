@@ -82,10 +82,32 @@ const getAllUserReferree = (userId) => {
     })
 }
 
+const creditUser = (userId, amount) => {
+    return new Promise( async (resolve, reject)=>{
+        try{
+            let user = await userSchema.findOne({ userId })
+            if (user) {
+                user.balance += amount
+                user.save()
+                .then((res) => {
+                    resolve({ status: true, msg: "User credited", data: res })
+                })
+                .catch((err) => {
+                    reject({ status: false, errorMsg: "There was an error saving data", error: err })
+                })
+            }
+        }
+        catch(err) {
+            reject({ status: false, errorMsg: "There was an error saving data", error: err })
+        }
+    })
+}
+
 
 module.exports = {
     saveUserInfo,
     getUser,
     saveReferral,
-    getAllUserReferree
+    getAllUserReferree,
+    creditUser
 }
