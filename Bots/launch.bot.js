@@ -16,7 +16,7 @@ const launchBot = () => {
         saveUserInfo(ctx.from)
             .then((data) => {
                 const msg = welcomeMsg()
-                ctx.reply(`👋Hello, Welcome to Epidomax. https://t.me/tender_test_1bot?start=${data.data.userId}`,
+                ctx.reply(`👋Hello, Welcome to Epidomax.`,
                     Markup.keyboard([
                         ['Daily Reward 🎁', 'Balance 💰'],
                         ['Task 💼', 'Invite ✉'],
@@ -29,7 +29,7 @@ const launchBot = () => {
                 )
                 ctx.reply(msg,
                     Markup.inlineKeyboard([
-                        Markup.button.callback('Check', 'CHECK'),
+                        Markup.button.callback('Get bonus', 'CHECK'),
                     ])
                 )
 
