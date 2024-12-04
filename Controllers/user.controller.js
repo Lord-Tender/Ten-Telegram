@@ -53,6 +53,9 @@ const getUser = (userId) => {
 
 const saveReferral = (referrerUserId, refereeId) => {
     return new Promise((resolve, reject) => {
+        if (referrerUserId == refereeId) {
+            reject()
+        }
         let data = {
             referrerUserId,
             refereeId
