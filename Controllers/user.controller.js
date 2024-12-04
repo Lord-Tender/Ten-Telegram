@@ -2,8 +2,10 @@ const { userSchema, referralSchema } = require('../Models/user.model')
 
 const generateUserId = async () => {
     let data = await userSchema.find({})
-    let no = data.length + 1 + 1000000
-    return `${no}_bt`
+    let no = data.length + 1 + 1000
+    let number = [ 23, 32, 34, 43, 50 ]
+    let randomNo = Math.floor(Math.random() * 11);
+    return `${no}_${number[randomNo]}_ep`
 }
 
 const saveUserInfo = async (telegramData) => {
