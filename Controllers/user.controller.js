@@ -1,12 +1,13 @@
 const { userSchema, referralSchema } = require('../Models/user.model')
 
 const generateUserId = async () => {
-    let data = await userSchema.find({})
-    let no = data.length + 1 + 1000
-    let number = [ 23, 32, 34, 43, 50 ]
-    let randomNo = Math.floor(Math.random() * 11);
-    return `${no}_${number[randomNo]}_ep`
-}
+    let data = await userSchema.find({});
+    let no = data.length + 1 + 1000;
+    let number = [23, 32, 34, 43, 50];
+    let randomNo = Math.floor(Math.random() * number.length);
+    return `${no}_${number[randomNo]}_ep`;
+};
+
 
 const saveUserInfo = async (telegramData) => {
     const userId = await generateUserId()
@@ -64,7 +65,9 @@ const saveReferral = (referrerUserId, refereeId) => {
         }
         let referral = new referralSchema(data)
         referral.save()
-            .then((res) => {
+            .then( async (res) => {
+                let credited = await creditUser(referrerUserId, 2000)
+                console.log(credited)
                 resolve({ status: true, msg: "Saved", data: res })
             })
             .catch((err) => {
@@ -92,7 +95,7 @@ const creditUser = (userId, amount) => {
         try{
             let user = await userSchema.findOne({ userId })
             if (user) {
-                user.balance += amount
+                user.userBalance += amount
                 user.save()
                 .then((res) => {
                     resolve({ status: true, msg: "User credited", data: res })
