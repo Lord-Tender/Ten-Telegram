@@ -26,7 +26,6 @@ const saveUserInfo = async (telegramData) => {
         let user = new userSchema(data)
         user.save()
             .then((response) => {
-                console.log(response)
                 resolve({ status: true, data: response })
             })
             .catch((err) => {
@@ -67,7 +66,6 @@ const saveReferral = (referrerUserId, refereeId) => {
         referral.save()
             .then( async (res) => {
                 let credited = await creditUser(referrerUserId, 2000)
-                console.log(credited)
                 resolve({ status: true, msg: "Saved", data: res })
             })
             .catch((err) => {

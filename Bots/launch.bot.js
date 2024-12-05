@@ -3,6 +3,7 @@ require('dotenv').config()
 const telegramToken = process.env.TELEGRAM_TOKEN
 const { saveUserInfo, saveReferral } = require('../Controllers/user.controller')
 const { welcomeMsg } = require('./message.bot')
+const { checkMembership } = require('./func.bot')
 
 const launchBot = () => {
     const bot = new Telegraf(telegramToken)
@@ -15,7 +16,6 @@ const launchBot = () => {
         saveUserInfo(ctx.from)
             .then( async (data) => {
                 await saveReferral(ctx.payload, data.data.userId)
-                console.log(referral)
                 const msg = welcomeMsg()
                 await ctx.reply(`👋Hello, Welcome to Epidomax. https://t.me/tender_test_1bot?start=${data.data.userId}`,
                     Markup.keyboard([
@@ -45,7 +45,14 @@ const launchBot = () => {
 
     bot.action('CHECK', (ctx) => {
         ctx.answerCbQuery();
-        ctx.reply('Are you sure');
+        console.log(ctx.from)
+        checkMembership(ctx)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     });
 
     bot.launch()
