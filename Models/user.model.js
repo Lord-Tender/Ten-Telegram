@@ -14,7 +14,7 @@ userSchema = mongoose.Schema(
 referral = mongoose.Schema(
     {
         referrerUserId: { type: String, require: true },
-        refereeId: { type: String, require: true }
+        refereeId: { type: String, unique: true, require: true }
     }
 )
 
