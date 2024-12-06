@@ -12,7 +12,7 @@ const checkMembership = (ctx) =>  {
         for (let i = 0; i < group.length; i++) {
             try{
                 const member = await ctx.telegram.getChatMember(group[i], user);
-                if (member.status == 'member') {
+                if (member.status == 'member' || member.status == 'administrator' || member.status == 'creator') {
                     check.push({ group: group[i], status: true })
                 } else {
                     check.push({ group: group[i], status: false })
