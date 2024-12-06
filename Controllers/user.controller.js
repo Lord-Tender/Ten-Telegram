@@ -47,9 +47,9 @@ const getUser = (userId) => {
             if (!user) {
                 user = await userSchema.findOne({ telegramId: userId })
             }
-            
+
             if (user) {
-                resolve({ status: true, data })
+                resolve({ status: true, data: user })
             }
         }
         catch (error) {

@@ -7,7 +7,8 @@ userSchema = mongoose.Schema(
         telegramUsername: { type: String, require: true },
         telegramId: { type: String, require: true, unique: true },
         userId: { type: String, require: true, unique: true },
-        userBalance: { type: Number, default: 0 }
+        userBalance: { type: Number, default: 0 },
+        welbonusCredit: { type: Boolean, default: false }
     }
 )
 

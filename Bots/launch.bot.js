@@ -1,7 +1,7 @@
 const { Telegraf, Markup } = require('telegraf')
 require('dotenv').config()
 const telegramToken = process.env.TELEGRAM_TOKEN
-const { saveUserInfo, saveReferral } = require('../Controllers/user.controller')
+const { saveUserInfo, saveReferral, getUser } = require('../Controllers/user.controller')
 const { welcomeMsg, getwelSuccess } = require('./message.bot')
 const { checkMembership } = require('./func.bot')
 
@@ -48,9 +48,10 @@ const launchBot = () => {
         ctx.answerCbQuery();
         console.log(ctx.from)
         checkMembership(ctx)
-            .then((res) => {
-                console.log(res)
-                if (res[0].status && res[1].status && res[2].status) {
+            .then( async (res) => {
+                let user = await getUser(ctx.from.id)
+                console.log(user)
+                if (res[0].status && res[1].status && res[2].status && !user.welbonusCredit) {
                     const msg = getwelSuccess()
                     ctx.reply(msg, 
                         {
@@ -63,6 +64,14 @@ const launchBot = () => {
                             ])
                         }
                     )
+                    user.welbonusCredit = true
+                    user.save()
+                    .then((data) => {
+                        console.log(data)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
                 }
             })
             .catch((err) => {
