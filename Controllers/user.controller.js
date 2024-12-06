@@ -20,7 +20,7 @@ const saveUserInfo = async (telegramData) => {
             firstName: telegramData.first_name,
             lastName: telegramData.last_name,
             telegramUsername: telegramData.username,
-            chatId: telegramData.id,
+            telegramId: telegramData.id,
             userId
         }
         let user = new userSchema(data)
@@ -43,6 +43,11 @@ const getUser = (userId) => {
     return new Promise(async (resolve, reject) => {
         try {
             let user = await userSchema.findOne({ userId })
+
+            if (!user) {
+                user = await userSchema.findOne({ telegramId: userId })
+            }
+            
             if (user) {
                 resolve({ status: true, data })
             }

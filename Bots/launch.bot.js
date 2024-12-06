@@ -2,7 +2,7 @@ const { Telegraf, Markup } = require('telegraf')
 require('dotenv').config()
 const telegramToken = process.env.TELEGRAM_TOKEN
 const { saveUserInfo, saveReferral } = require('../Controllers/user.controller')
-const { welcomeMsg } = require('./message.bot')
+const { welcomeMsg, getwelSuccess } = require('./message.bot')
 const { checkMembership } = require('./func.bot')
 
 const launchBot = () => {
@@ -15,21 +15,22 @@ const launchBot = () => {
         }
         saveUserInfo(ctx.from)
             .then( async (data) => {
-                await saveReferral(ctx.payload, data.data.userId)
+                console.log(data)
+                try{
+                    if (ctx.payload) {
+                        await saveReferral(ctx.payload, data.data.userId)
+                    }
+                }catch(err) {
+                    console.log(err)
+                }
                 const msg = welcomeMsg()
-                await ctx.reply(`👋Hello, Welcome to Epidomax. https://t.me/tender_test_1bot?start=${data.data.userId}`,
-                    Markup.keyboard([
-                        ['Daily Reward 🎁', 'Balance 💰'],
-                        ['Task 💼', 'Invite ✉'],
-                        ['Withdrawal 💳', 'Advertise 📢'],
-                        ['Join Us on all Social Media ✅'],
-                    ])
-                        .resize()
-                )
                 ctx.reply(msg,
-                    Markup.inlineKeyboard([
-                        Markup.button.callback('Get bonus', 'CHECK'),
-                    ])
+                    {
+                        parse_mode: 'MarkdownV2',
+                        ...Markup.inlineKeyboard([
+                            Markup.button.callback('🎁 Get bonus', 'CHECK'),
+                        ]),
+                    }
                 )
 
             })
@@ -49,6 +50,20 @@ const launchBot = () => {
         checkMembership(ctx)
             .then((res) => {
                 console.log(res)
+                if (res[0].status && res[1].status && res[2].status) {
+                    const msg = getwelSuccess()
+                    ctx.reply(msg, 
+                        {
+                            parse_mode: 'HTML',
+                            ...Markup.keyboard([
+                                ['Daily Reward 🎁', 'Balance 💰'],
+                                ['Task 💼', 'Invite ✉'],
+                                ['Withdrawal 💳', 'Advertise 📢'],
+                                ['Join Us on all Social Media ✅'],
+                            ])
+                        }
+                    )
+                }
             })
             .catch((err) => {
                 console.log(err)
