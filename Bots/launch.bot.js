@@ -1,8 +1,8 @@
 const { Telegraf, Markup } = require('telegraf')
 require('dotenv').config()
 const telegramToken = process.env.TELEGRAM_TOKEN
-const { saveUserInfo, saveReferral, getUser } = require('../Controllers/user.controller')
-const { welcomeMsg, getwelSuccess } = require('./message.bot')
+const { saveUserInfo, saveReferral, getUser, editUserData } = require('../Controllers/user.controller')
+const { welcomeMsg, getwelSuccess, getwelError } = require('./message.bot')
 const { checkMembership } = require('./func.bot')
 
 const launchBot = () => {
@@ -15,13 +15,11 @@ const launchBot = () => {
         }
         saveUserInfo(ctx.from)
             .then( async (data) => {
-                console.log(data)
                 try{
                     if (ctx.payload) {
                         await saveReferral(ctx.payload, data.data.userId)
                     }
                 }catch(err) {
-                    console.log(err)
                 }
                 const msg = welcomeMsg()
                 ctx.reply(msg,
@@ -44,14 +42,31 @@ const launchBot = () => {
             })
     })
 
+    bot.hears('Invite ✉', async (ctx) => {
+        let user = await getUser(ctx.from.id)
+        ctx.reply(`Your referral link is: https://t.me/tender_test_1bot?start=${user.data.userId}`)
+    })
+
     bot.action('CHECK', (ctx) => {
         ctx.answerCbQuery();
-        console.log(ctx.from)
         checkMembership(ctx)
             .then( async (res) => {
                 let user = await getUser(ctx.from.id)
-                console.log(user)
-                if (res[0].status && res[1].status && res[2].status && !user.welbonusCredit) {
+
+                if (user.data.welbonusCredit) {
+                    ctx.reply("You completed the task and received your welcoming bonus already☺")
+                    return;
+                }
+
+                if (!res[0].status || !res[1].status || !res[2].status) {
+                    const msg = getwelError()
+                    ctx.reply(msg, {
+                        parse_mode: 'HTML',
+                    })
+                    return;
+                }
+
+                if (res[0].status && res[1].status && res[2].status && user.data.welbonusCredit === false) {
                     const msg = getwelSuccess()
                     ctx.reply(msg, 
                         {
@@ -64,10 +79,8 @@ const launchBot = () => {
                             ])
                         }
                     )
-                    user.welbonusCredit = true
-                    user.save()
+                    editUserData(user.data.userId, { title: "welbonusCredit", value: true })
                     .then((data) => {
-                        console.log(data)
                     })
                     .catch((err) => {
                         console.log(err)

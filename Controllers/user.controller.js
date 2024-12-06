@@ -29,7 +29,6 @@ const saveUserInfo = async (telegramData) => {
                 resolve({ status: true, data: response })
             })
             .catch((err) => {
-                console.error(err)
                 if (err.code === 11000) {
                     reject({ status: false, errorMsg: "Already a user", code: err.code })
                 }
@@ -114,11 +113,33 @@ const creditUser = (userId, amount) => {
     })
 }
 
+const editUserData = (userId, { title, value }) => {
+    return new Promise( async (resolve, reject)=>{
+        try{
+            let user = await userSchema.findOne({ userId })
+            if (user) {
+                user[title] = value
+                user.save()
+                .then((res) => {
+                    resolve({ status: true, msg: "User data updated", data: res })
+                })
+                .catch((err) => {
+                    reject({ status: false, errorMsg: "There was an error saving data", error: err })
+                })
+            }
+        }
+        catch(err) {
+            reject({ status: false, errorMsg: "There was an error saving data", error: err })
+        }
+    })
+}
+
 
 module.exports = {
     saveUserInfo,
     getUser,
     saveReferral,
     getAllUserReferree,
-    creditUser
+    creditUser,
+    editUserData
 }

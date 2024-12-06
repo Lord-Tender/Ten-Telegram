@@ -23,7 +23,14 @@ const getwelSuccess = () => {
   `
 }
 
+const getwelError = () => {
+  return `
+  <b>🚫 Error 🚫</b>\n\nYou have not joined all the groups, please join all the groups to receive your welcoming bonus.\n\nJoin and Subcribe to our communities:\n\n◀ Join👉 @tenderseries \n◀ Join👉 @earner065 \n◀ Join👉 @earner066 \n\n Click on "Get bonus" below to re-check.
+  `
+}
+
 module.exports = {
     welcomeMsg,
-    getwelSuccess
+    getwelSuccess,
+    getwelError
 }
