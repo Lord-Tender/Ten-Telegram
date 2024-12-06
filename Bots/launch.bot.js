@@ -15,7 +15,6 @@ const launchBot = () => {
         }
         saveUserInfo(ctx.from)
             .then( async (data) => {
-                console.log(data)
                 try{
                     if (ctx.payload) {
                         await saveReferral(ctx.payload, data.data.userId)
@@ -34,7 +33,6 @@ const launchBot = () => {
 
             })
             .catch( async (error) => {
-                console.log(error)
                 if (error.code == 11000) {
                     await ctx.reply("You're already a user, Enjoy earning with us😉")
                     return;
