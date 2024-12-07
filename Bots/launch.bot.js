@@ -2,7 +2,7 @@ const { Telegraf, Markup } = require('telegraf')
 require('dotenv').config()
 const telegramToken = process.env.TELEGRAM_TOKEN
 const { saveUserInfo, saveReferral, getUser, editUserData, creditUser } = require('../Controllers/user.controller')
-const { welcomeMsg, getwelSuccess, getwelError } = require('./message.bot')
+const { welcomeMsg, getwelSuccess, getwelError, referralComMsg } = require('./message.bot')
 const { checkMembership } = require('./func.bot')
 
 const launchBot = () => {
@@ -42,9 +42,14 @@ const launchBot = () => {
             })
     })
 
-    bot.hears('Invite ✉', async (ctx) => {
+    bot.hears('Referral ✉', async (ctx) => {
         let user = await getUser(ctx.from.id)
-        ctx.reply(`Your referral link is: https://t.me/tender_test_1bot?start=${user.data.userId}`)
+        const msg = referralComMsg(user.data.userId)
+        ctx.reply(msg,
+            {
+                parse_mode: 'HTML',
+            }
+        )
     })
 
     bot.action('CHECK', (ctx) => {

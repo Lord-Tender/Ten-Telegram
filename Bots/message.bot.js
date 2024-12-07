@@ -29,8 +29,15 @@ const getwelError = () => {
   `
 }
 
+const referralComMsg = (userId) => {
+  return `
+    <b>You get a reward of <i>₦1,000</i> for each person you invite.</b>\nTo invite and earn, copy your referral link below and share with friend for them to join.\n\n<b>Referral Link:</b>\n\nhttps://t.me/tender_test_1bot?start=${userId}
+  `
+}
+
 module.exports = {
     welcomeMsg,
     getwelSuccess,
-    getwelError
+    getwelError,
+    referralComMsg
 }
