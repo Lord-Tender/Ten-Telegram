@@ -8,6 +8,11 @@ let uri = process.env.URI
 
 launchBot()
 
+app.get('/keep', (req, res) =>{
+    res.status(201).send({ staus: true })
+    console.log("Server pinged")
+})
+
 app.listen(port, () => {
     console.log('Server is running at port: ' + port)
     mongoose.connect(uri)
