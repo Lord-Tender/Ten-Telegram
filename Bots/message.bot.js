@@ -19,7 +19,7 @@ const welcomeMsg = () => {
 
 const getwelSuccess = () => {
   return `
-  <b>🎉 Congratulations 🎉</b>\n\nYou have successfully joined Epidomax and received your welcoming bonus of ₦2,500.\n\nYou can earn more by:\n\n🔹 Checking here daily for bonus(Daily rewards)\n🔹 Completing simpe task for rewards(Task)\nInviting friend to join for rewards(Referral)\nGetting your achievement rewards(Achievement)\n\nHappy earning☺
+  <b>🎉 Congratulations 🎉</b>\n\nYou have successfully joined Epidomax and received your welcoming bonus of ₦2,500.\n\n<b>You can earn more by:</b>\n\n🔹 Checking here daily for bonus(Daily rewards)\n🔹 Completing simpe task for rewards(Task)\n🔹 Inviting friend to join for rewards(Referral)\n🔹 Getting your achievement rewards(Achievement)\n\n<b>Happy earning☺</b>
   `
 }
 
@@ -31,7 +31,7 @@ const getwelError = () => {
 
 const referralComMsg = (userId) => {
   return `
-    <b>You get a reward of <i>₦1,000</i> for each person you invite.</b>\nTo invite and earn, copy your referral link below and share with friend for them to join.\n\n<b>Referral Link:</b>\n\nhttps://t.me/tender_test_1bot?start=${userId}
+    <b>You get a reward of ₦1,000< for each person you invite.</b>\nTo invite and earn, copy your referral link below and share with friend for them to join.\n\n<b>Referral Link:</b>\n\nhttps://t.me/tender_test_1bot?start=${userId}
   `
 }
 
