@@ -19,7 +19,7 @@ const welcomeMsg = () => {
 
 const getwelSuccess = () => {
   return `
-  <b>🎉 Congratulations 🎉</b>\n\nYou have successfully joined Epidomax and received your welcoming bonus of ₦2,500.
+  <b>🎉 Congratulations 🎉</b>\n\nYou have successfully joined Epidomax and received your welcoming bonus of ₦2,500.\n\nYou can earn more by:\n\n🔹 Checking here daily for bonus(Daily rewards)\n🔹 Completing simpe task for rewards(Task)\nInviting friend to join for rewards(Referral)\nGetting your achievement rewards(Achievement)\n\nHappy earning☺
   `
 }
 

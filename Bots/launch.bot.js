@@ -74,7 +74,7 @@ const launchBot = () => {
                             parse_mode: 'HTML',
                             ...Markup.keyboard([
                                 ['Daily Reward 🎁', 'Balance 💰'],
-                                ['Task 💼', 'Invite ✉'],
+                                ['Task 💼', 'Referral ✉'],
                                 ['Withdrawal 💳', 'Advertise 📢'],
                                 ['Join Us on all Social Media ✅'],
                             ])

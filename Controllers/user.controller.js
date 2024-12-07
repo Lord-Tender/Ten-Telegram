@@ -60,8 +60,9 @@ const getUser = (userId) => {
 const saveReferral = (referrerUserId, refereeId) => {
     return new Promise((resolve, reject) => {
         if (referrerUserId == refereeId) {
-            reject()
+            reject({ status: false, errorMsg: "You can not refer yourself" })
         }
+
         let data = {
             referrerUserId,
             refereeId
