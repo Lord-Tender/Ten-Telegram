@@ -67,6 +67,9 @@ const launchBot = () => {
                     const msg = getwelError()
                     ctx.reply(msg, {
                         parse_mode: 'HTML',
+                        ...Markup.inlineKeyboard([
+                            Markup.button.callback('🎁 Get bonus', 'CHECK'),
+                        ]),
                     })
                     return;
                 }

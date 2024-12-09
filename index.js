@@ -9,7 +9,7 @@ let uri = process.env.URI
 launchBot()
 
 app.get('/keep', (req, res) =>{
-    res.status(204).send({ staus: true })
+    res.status(204).send("Server pinged!")
     console.log("Server pinged")
 })
 

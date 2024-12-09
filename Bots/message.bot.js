@@ -31,7 +31,7 @@ const getwelError = () => {
 
 const referralComMsg = (userId) => {
   return `
-    <b>You get a reward of ₦1,000< for each person you invite.</b>\nTo invite and earn, copy your referral link below and share with friend for them to join.\n\n<b>Referral Link:</b>\n\nhttps://t.me/tender_test_1bot?start=${userId}
+    <b>You get a reward of ₦1,000 for each person you invite.</b>\n\nTo invite and earn, copy your referral link below and share with friend for them to join.\n\n<b>Referral Link:</b>\n\nhttps://t.me/tender_test_1bot?start=${userId}
   `
 }
 
